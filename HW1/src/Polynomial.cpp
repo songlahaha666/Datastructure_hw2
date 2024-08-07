@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cmath> // ¥Î©ó pow ¨ç¼Æ
+#include <cmath> // ç”¨æ–¼ pow å‡½æ•¸
 using namespace std;
 
 class Polynomial; // Forward declaration
@@ -7,24 +7,24 @@ class Polynomial; // Forward declaration
 class Term {
     friend Polynomial;
 public:
-    float coef; // «Y¼Æ
-    int exp;    // «ü¼Æ
+    float coef; // ä¿‚æ•¸
+    int exp;    // æŒ‡æ•¸
 };
 
 class Polynomial {
 public:
-    Polynomial(); // «Øºc¦h¶µ¦¡ p(x) = 0
-    ~Polynomial(); // ¸Ñºc¤lÄÀ©ñ°ÊºA°O¾ĞÅé
-    Polynomial Add(const Polynomial& poly) const; // ¦h¶µ¦¡¬Û¥[
-    Polynomial Mult(const Polynomial& poly) const; // ¦h¶µ¦¡¬Û­¼
-    float Eval(float f) const; // ­pºâ¦h¶µ¦¡¦b f ªº­È
-    friend istream& operator>>(istream& is, Polynomial& p); // ¦h¶µ¦¡¿é¤J
-    friend ostream& operator<<(ostream& os, const Polynomial& p); // ¦h¶µ¦¡¿é¥X
+    Polynomial(); // å»ºæ§‹å¤šé …å¼ p(x) = 0
+    ~Polynomial(); // è§£æ§‹å­é‡‹æ”¾å‹•æ…‹è¨˜æ†¶é«”
+    Polynomial Add(const Polynomial& poly) const; // å¤šé …å¼ç›¸åŠ 
+    Polynomial Mult(const Polynomial& poly) const; // å¤šé …å¼ç›¸ä¹˜
+    float Eval(float f) const; // è¨ˆç®—å¤šé …å¼åœ¨ f çš„å€¼
+    friend istream& operator>>(istream& is, Polynomial& p); // å¤šé …å¼è¼¸å…¥
+    friend ostream& operator<<(ostream& os, const Polynomial& p); // å¤šé …å¼è¼¸å‡º
 
 private:
-    Term* termArray; // «D¹s¶µªº°}¦C
-    int capacity;    // termArray ªº¤j¤p
-    int terms;       // «D¹s¶µªº¼Æ¶q
+    Term* termArray; // éé›¶é …çš„é™£åˆ—
+    int capacity;    // termArray çš„å¤§å°
+    int terms;       // éé›¶é …çš„æ•¸é‡
 };
 
 Polynomial::Polynomial() : capacity(1), terms(0) {
@@ -108,7 +108,7 @@ Polynomial Polynomial::Mult(const Polynomial& poly) const {
         }
     }
 
-    // ²¾°£«Y¼Æ¬°0ªº¶µ¦¸
+    // ç§»é™¤ä¿‚æ•¸ç‚º0çš„é …æ¬¡
     int validTerms = 0;
     for (int i = 0; i < result.terms; ++i) {
         if (result.termArray[i].coef != 0) {
@@ -129,14 +129,14 @@ float Polynomial::Eval(float f) const {
 }
 
 istream& operator>>(istream& is, Polynomial& p) {
-    cout << "¿é¤J«D¹s¶µªº¼Æ¶q: ";
+    cout << "è¼¸å…¥éé›¶é …çš„æ•¸é‡: ";
     is >> p.terms;
     p.capacity = p.terms;
-    delete[] p.termArray; // ÄÀ©ñ¥ı«eªº°ÊºA°O¾ĞÅé
+    delete[] p.termArray; // é‡‹æ”¾å…ˆå‰çš„å‹•æ…‹è¨˜æ†¶é«”
     p.termArray = new Term[p.capacity];
 
     for (int i = 0; i < p.terms; ++i) {
-        cout << "¿é¤J²Ä" << i + 1 << "¶µªº«Y¼Æ©M«ü¼Æ: ";
+        cout << "è¼¸å…¥ç¬¬" << i + 1 << "é …çš„ä¿‚æ•¸å’ŒæŒ‡æ•¸: ";
         is >> p.termArray[i].coef >> p.termArray[i].exp;
     }
     return is;
@@ -152,18 +152,23 @@ ostream& operator<<(ostream& os, const Polynomial& p) {
 
 int main() {
     Polynomial p1, p2;
-    cout << "¿é¤J²Ä¤@­Ó¦h¶µ¦¡:\n";
+    cout << "è¼¸å…¥ç¬¬ä¸€å€‹å¤šé …å¼:\n";
     cin >> p1;
-    cout << "¿é¤J²Ä¤G­Ó¦h¶µ¦¡:\n";
+    cout << "è¼¸å…¥ç¬¬äºŒå€‹å¤šé …å¼:\n";
     cin >> p2;
 
     Polynomial sum = p1.Add(p2);
     Polynomial product = p1.Mult(p2);
 
-    cout << "²Ä¤@­Ó¦h¶µ¦¡: " << p1 << endl;
-    cout << "²Ä¤G­Ó¦h¶µ¦¡: " << p2 << endl;
-    cout << "¦h¶µ¦¡ªº©M: " << sum << endl;
-    cout << "¦h¶µ¦¡ªº¿n: " << product << endl;
+    cout << "ç¬¬ä¸€å€‹å¤šé …å¼: " << p1 << endl;
+    cout << "ç¬¬äºŒå€‹å¤šé …å¼: " << p2 << endl;
+    cout << "å¤šé …å¼çš„å’Œ: " << sum << endl;
+    cout << "å¤šé …å¼çš„ç©: " << product << endl;
 
+    int n;
+    cout << "è¼¸å…¥ä¸€å€‹å€¼çµ¦p1ä»£å…¥:";
+    cin >> n;
+    int eval = p1.Eval(n);
+    cout << "p1" << "(" << n << ") = " << eval << endl;
     return 0;
 }
